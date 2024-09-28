@@ -1,12 +1,24 @@
-import news_feed from './sample_news_stories.json';
+import React, { useState } from 'react';
+import Story from './components/Story';  
+import news_feed from './sample_news_stories.json'; 
 
 function App() {
+  
+  const [stories, setStories] = useState(news_feed.results); 
 
-  // Get stories from news feed
-  const stories = news_feed.results;
+  
+  const removeStory = (id) => {
+    setStories(stories.filter(story => story.title !== id));
+  };
 
   return (
     <div className="App">
+      <h1>News Stories</h1>
+      <div className="stories-list">
+        {stories.map(story => (
+          <Story key={story.id} story={story} onRemove={removeStory} />
+        ))}
+      </div>
     </div>
   );
 }
